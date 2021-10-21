@@ -1,5 +1,7 @@
 import * as React from "react"
 import { graphql, Link } from "gatsby"
+import CharacterCard from "../components/CharacterCard"
+import GridContainer from "../components/GridContainer"
 
 const IndexPage = ({ data, pageContext }) => {
   const characters = data.allCharacters.nodes
@@ -8,30 +10,29 @@ const IndexPage = ({ data, pageContext }) => {
   console.log(pageContext)
   return (
     <div>
-      <h1>Character List</h1>
-      {characters.map(ch => {
-        return (
-          <Link to={"/character/" + ch.name} key={ch.id}>
-            <div>
-              <img src={ch.image} alt={ch.name} />
-              <h2>{ch.name}</h2>
-            </div>
-          </Link>
-        )
-      })}
-      <div>
+      <h2 className="heading">Character List</h2>
+      <GridContainer>
+        {characters.map(ch => {
+          return <CharacterCard character={ch} />
+        })}
+      </GridContainer>
+      <div className="links">
         {pageContext.currentPage === 1 ? (
           <p>link</p>
         ) : (
-          <Link to={prev}>prev</Link>
+          <p>
+            <Link to={prev}>prev</Link>
+          </p>
         )}
         <p>
           {pageContext.currentPage}/{pageContext.noOfPages}
         </p>
         {pageContext.currentPage === pageContext.noOfPages ? (
-          <p>link</p>
+          <p>next</p>
         ) : (
-          <Link to={next}>next</Link>
+          <p>
+            <Link to={next}>next</Link>
+          </p>
         )}
       </div>
     </div>

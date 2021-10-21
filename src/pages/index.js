@@ -1,5 +1,7 @@
 import * as React from "react"
 import { graphql, Link } from "gatsby"
+import GridContainer from "../components/GridContainer"
+import CharacterCard from "../components/CharacterCard"
 
 const IndexPage = ({ data }) => {
   // const info = props.data.rickandmortyapi.characters.info
@@ -10,19 +12,16 @@ const IndexPage = ({ data }) => {
     <div>
       <section></section>
       <section>
-        <h2>Few Characters</h2>
-        {characters.map(ch => {
-          return (
-            <Link to={"/character/" + ch.name} key={ch.id}>
-              <div>
-                <img src={ch.image} alt={ch.name} />
-                <h2>{ch.name}</h2>
-              </div>
-            </Link>
-          )
-        })}
+        <h2 className="heading">Few Characters</h2>
+        <GridContainer>
+          {characters.map(ch => {
+            return <CharacterCard character={ch} />
+          })}
+        </GridContainer>
       </section>
-      <Link to="/characters">View More...</Link>
+      <Link to="/characters" className="view-more">
+        View More...
+      </Link>
     </div>
   )
 }

@@ -1,54 +1,3 @@
-// const path = require("path")
-
-// exports.onPostBuild = ({ reporter }) => {
-//   reporter.info(`Your Gatsby site has been built!`)
-// }
-// exports.createPages = async ({ graphql, actions }) => {
-//   const { createPage } = actions
-//   const charaterTemplate = path.resolve(`src/pages/character.js`)
-//   const result = await graphql(`
-//     query {
-//       rickandmortyapi {
-//         characters(page: 1) {
-//           results {
-//             id
-//             image
-//             name
-//             type
-//             species
-//             status
-//           }
-//           info {
-//             prev
-//             next
-//             pages
-//           }
-//         }
-//       }
-//     }
-//   `)
-//   result.data.rickandmortyapi.characters.results.forEach(ch => {
-//     createPage({
-//       path: `${ch.name}`,
-//       component: charaterTemplate,
-//       context: {
-//         id: Number(ch.id),
-//       },
-//     })
-//   })
-//   //const charaterListTemplate = path.resolve(`src/template/character-list.js`);
-//   // const info = result.data.rickandmortyapi.characters.info
-//   // for(let i=0;i<info.pages;i++){
-//   //   createPage({
-//   //     path: i===0 ? `/` : `/${i}`,
-//   //     component: charaterListTemplate,
-//   //     context: {
-//   //       ...ch,
-//   //     },
-//   //   })
-//   // }
-// }
-
 const path = require("path")
 
 const axios = require("axios")
@@ -87,17 +36,6 @@ exports.sourceNodes = async ({
     createNode(node)
   })
 }
-
-// exports.createSchemaCustomization = ({ actions, schema }) => {
-//     const { createTypes } = actions
-//     const typeDefs = [
-//       `type SOME_TYPE implements Node {
-//         extra_fields: TYPE @link(from: "item.id")
-//       }`
-//     ]
-//     //
-//     createTypes(typeDefs)
-//   }
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions

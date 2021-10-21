@@ -4,15 +4,30 @@ import React from "react"
 const character = ({ data, pageContext }) => {
   const ch = data.characters
   return (
-    <div>
-      <h1>Single Character</h1>
+    <div className="character-page">
+      <h1 className="heading">{ch.name}</h1>
       <div>
-        <img src={ch.image} alt={ch.name} />
-        <h2>{ch.name}</h2>
-        <p>Gender: {ch.gender}</p>
-        <p>Species: {ch.species}</p>
-        <p>Status: {ch.status}</p>
-        <p>Type:{ch.type}</p>
+        <div className="single-image-container">
+          <img src={ch.image} alt={ch.name} />
+        </div>
+        <section className="character-details">
+          <div className="flex-container">
+            <h3>Gender:</h3>
+            <p> {ch.gender}</p>
+          </div>
+          <div className="flex-container">
+            <h3>Species:</h3>
+            <p> {ch.species}</p>
+          </div>
+          <div className="flex-container">
+            <h3>Status:</h3>
+            <p> {ch.status}</p>
+          </div>
+          <div className="flex-container">
+            <h3>Type:</h3>
+            <p> {ch.type}</p>
+          </div>
+        </section>
       </div>
     </div>
   )
