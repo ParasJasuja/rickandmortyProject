@@ -85,7 +85,7 @@ const IndexPage = ({ data }) => {
         />
         <GridContainer>
           {charactersList.length > 0 ? (
-            charactersList.map(ch => {
+            charactersList.slice(0, noOfCharacters).map(ch => {
               return <CharacterCard key={ch.id} character={ch} />
             })
           ) : (
