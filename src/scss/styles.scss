@@ -20,6 +20,26 @@ $gradientColor2: #800080;
         z-index: -1;
     }
 }
+@mixin moreLess($content){
+    display: block;
+    text-align: center;
+    font-size: 1.1rem;
+    background: none;
+    border: none;
+    outline: none;
+    margin: 0 auto;
+    color: inherit;
+    padding: 2rem 0.5rem;
+    box-shadow: none;
+    cursor: pointer;
+    &::after{
+        content: $content;
+        color: $gradientColor1;
+    }
+    &:hover{
+        color: $gradientColor1;
+    }
+}
 body{
     background-color: $primaryBackground2;
     color: $textColor;
@@ -41,20 +61,11 @@ a{
     grid-column: 1/-1;
 }
 .view-more{
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 2rem;
-    &::after{
-        content: " >>";
-    }
-    &:hover{
-        color: $gradientColor1;
-    }
+    @include moreLess(" v")
 }
-
-
-
+.view-less{
+    @include moreLess(" ^")
+}
 .grid-container{
     display: grid;
     min-height: 400px;
@@ -105,7 +116,6 @@ a{
         text-align: center;
     }
 
-    
 .single-image-container{
     position: relative;
     min-width: 280px;

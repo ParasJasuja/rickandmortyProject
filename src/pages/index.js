@@ -1,12 +1,18 @@
 import * as React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import GridContainer from "../components/GridContainer"
 import CharacterCard from "../components/CharacterCard"
 import Layout from "../components/Layout"
 import "../scss/styles.scss"
+import FilterCharacter from "../components/FilterCharacter"
 
 const IndexPage = ({ data }) => {
+  const [characterSearch, setCharacterSearch] = React.useState("")
+  const [filterValue, setFilterValue] = React.useState("any")
+  const [noOfCharacters, setNoOfCharacters] = React.useState(20)
+  const [viewMore, setViewMore] = React.useState(1)
   const characters = data.allCharacters.nodes ? data.allCharacters.nodes : []
+  const [charactersList, setCharactersList] = React.useState(characters)
   const types = []
   const status = []
   const species = []
@@ -25,71 +31,85 @@ const IndexPage = ({ data }) => {
       species.push(ch.species)
     }
   })
-  const [charactersList, setCharactersList] = React.useState(characters)
-  const [filterValue, setFilterValue] = React.useState("any")
 
+  const loadMoreCharacters = () => {
+    setNoOfCharacters(prvs => prvs + 20)
+  }
   React.useEffect(() => {
-    let newCharacterList = []
-    const filterList = e => {
-      if (filterValue === "any") {
-        newCharacterList = characters
-      } else {
-        newCharacterList = characters.filter(ch => {
-          return (
-            ch.type.toLowerCase() === filterValue ||
-            ch.status.toLowerCase() === filterValue ||
-            ch.species.toLowerCase() === filterValue
-          )
-        })
-        console.log(filterValue)
-      }
-      setCharactersList(newCharacterList.slice(0, 20))
+    if (characterSearch === "" && filterValue === "any") {
+      setCharactersList(characters)
+    } else if (characterSearch !== "" && filterValue === "any") {
+      const newCharactersList = characters.filter(ch => {
+        const name = ch.name.toLowerCase()
+        return name.indexOf(characterSearch.toLowerCase()) > -1
+      })
+
+      setCharactersList(newCharactersList)
+    } else if (characterSearch === "" && filterValue !== "any") {
+      const newCharactersList = characters.filter(ch => {
+        return (
+          ch.type.toLowerCase() === filterValue ||
+          ch.status.toLowerCase() === filterValue ||
+          ch.species.toLowerCase() === filterValue
+        )
+      })
+      setCharactersList(newCharactersList)
+    } else {
+      setCharactersList(prvs => prvs)
     }
-    filterList()
-  }, [filterValue])
+  }, [noOfCharacters, characterSearch, filterValue])
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    charactersList.length > noOfCharacters
+      ? setViewMore(1)
+      : charactersList.length < 20
+      ? setViewMore(0)
+      : setViewMore(-1)
+  }, [charactersList])
+
   return (
-    <Layout characters={characters} setCharactersList={setCharactersList}>
+    <Layout
+      characters={characters}
+      setCharactersList={setCharactersList}
+      characterSearch={characterSearch}
+      setCharacterSearch={setCharacterSearch}
+    >
       <section>
         <h2 className="heading">Few Characters</h2>
-        <div className="filter-container">
-          <h3>Filter</h3>
-          <select
-            value={filterValue}
-            onChange={e => setFilterValue(e.target.value)}
-          >
-            <option value="any">Any</option>
-            <optgroup label="Type">
-              {types.map(t => (
-                <option key={t} value={t.toLowerCase()}>
-                  {t}
-                </option>
-              ))}
-            </optgroup>
-            <optgroup label="Status">
-              {status.map(s => (
-                <option key={s} value={s.toLowerCase()}>
-                  {s}
-                </option>
-              ))}
-            </optgroup>
-            <optgroup label="Species">
-              {species.map(s => (
-                <option key={s} value={s.toLowerCase()}>
-                  {s}
-                </option>
-              ))}
-            </optgroup>
-          </select>
-        </div>
+        <FilterCharacter
+          types={types}
+          status={status}
+          species={species}
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
+        />
         <GridContainer>
-          {charactersList.map(ch => {
-            return <CharacterCard key={ch.id} character={ch} />
-          })}
+          {charactersList.length > 0 ? (
+            charactersList.map(ch => {
+              return <CharacterCard key={ch.id} character={ch} />
+            })
+          ) : (
+            <h2 className="heading">No Match Found</h2>
+          )}
         </GridContainer>
       </section>
-      <Link to="/characters" className="view-more">
-        View More
-      </Link>
+      {viewMore === 1 ? (
+        <button className="view-more" onClick={loadMoreCharacters}>
+          View More
+        </button>
+      ) : viewMore === -1 ? (
+        <button
+          className="view-less"
+          onClick={() => {
+            setNoOfCharacters(20)
+            setViewMore(true)
+          }}
+        >
+          View Less
+        </button>
+      ) : (
+        <p></p>
+      )}
     </Layout>
   )
 }

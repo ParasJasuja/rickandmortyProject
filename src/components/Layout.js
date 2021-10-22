@@ -1,19 +1,7 @@
 import { Link } from "gatsby"
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 const Layout = props => {
-  const [characterName, setCharacterName] = useState("")
-  const searchCharacter = () => {
-    const newCharactersList = props.characters.filter(ch => {
-      const name = ch.name.toLowerCase()
-      return name.indexOf(characterName.toLowerCase()) > -1
-    })
-    props.setCharactersList(newCharactersList.slice(0, 20))
-  }
-
-  useEffect(() => {
-    searchCharacter()
-  }, [characterName])
   return (
     <div>
       <div className="navbar">
@@ -25,9 +13,9 @@ const Layout = props => {
             type="search"
             placeholder="Search"
             onChange={e => {
-              setCharacterName(e.target.value)
+              props.setCharacterSearch(e.target.value)
             }}
-            value={characterName}
+            value={props.characterSearch}
           />
         </form>
         <div>

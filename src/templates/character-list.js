@@ -7,12 +7,26 @@ import "../scss/styles.scss"
 
 const IndexPage = ({ data, pageContext }) => {
   const characters = data.allCharacters.nodes ? data.allCharacters.nodes : []
+  const [characterSearch, setCharacterSearch] = React.useState("")
   const [charactersList, setCharactersList] = React.useState(characters)
   const prev = "/characters/" + (pageContext.currentPage - 1)
   const next = "/characters/" + (pageContext.currentPage + 1)
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const newCharactersList = characters.filter(ch => {
+      const name = ch.name.toLowerCase()
+      return name.indexOf(characterSearch.toLowerCase()) > -1
+    })
+    setCharactersList(newCharactersList)
+  }, [characterSearch])
 
   return (
-    <Layout characters={characters} setCharactersList={setCharactersList}>
+    <Layout
+      characters={characters}
+      setCharactersList={setCharactersList}
+      characterSearch={characterSearch}
+      setCharacterSearch={setCharacterSearch}
+    >
       <h2 className="heading">Character List</h2>
       <GridContainer>
         {charactersList.length > 0 ? (
