@@ -1,5 +1,6 @@
 import { graphql } from "gatsby"
 import React from "react"
+import "../scss/styles.scss"
 
 const character = ({ data, pageContext }) => {
   const ch = data.characters
@@ -8,7 +9,7 @@ const character = ({ data, pageContext }) => {
       <h1 className="heading">{ch.name}</h1>
       <div>
         <div className="single-image-container">
-          <img src={ch.image} alt={ch.name} />
+          <img src={ch.image} alt={ch.name} loading="lazy" />
         </div>
         <section className="character-details">
           <div className="flex-container">

@@ -11,6 +11,7 @@ const CharacterCard = props => {
             <img
               className="character-image"
               src={character.image}
+              loading="lazy"
               alt={character.name}
             />
           </div>

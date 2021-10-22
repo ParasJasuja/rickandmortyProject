@@ -2,23 +2,30 @@ import * as React from "react"
 import { graphql, Link } from "gatsby"
 import CharacterCard from "../components/CharacterCard"
 import GridContainer from "../components/GridContainer"
+import Layout from "../components/Layout"
+import "../scss/styles.scss"
 
 const IndexPage = ({ data, pageContext }) => {
-  const characters = data.allCharacters.nodes
+  const characters = data.allCharacters.nodes ? data.allCharacters.nodes : []
+  const [charactersList, setCharactersList] = React.useState(characters)
   const prev = "/characters/" + (pageContext.currentPage - 1)
   const next = "/characters/" + (pageContext.currentPage + 1)
-  console.log(pageContext)
+
   return (
-    <div>
+    <Layout characters={characters} setCharactersList={setCharactersList}>
       <h2 className="heading">Character List</h2>
       <GridContainer>
-        {characters.map(ch => {
-          return <CharacterCard character={ch} />
-        })}
+        {charactersList.length > 0 ? (
+          charactersList.map(ch => {
+            return <CharacterCard key={ch.id} character={ch} />
+          })
+        ) : (
+          <h2 className="heading">No Match Found</h2>
+        )}
       </GridContainer>
       <div className="links">
         {pageContext.currentPage === 1 ? (
-          <p>link</p>
+          <p className="disabled">prvs</p>
         ) : (
           <p>
             <Link to={prev}>prev</Link>
@@ -28,14 +35,14 @@ const IndexPage = ({ data, pageContext }) => {
           {pageContext.currentPage}/{pageContext.noOfPages}
         </p>
         {pageContext.currentPage === pageContext.noOfPages ? (
-          <p>next</p>
+          <p className="disabled">next</p>
         ) : (
           <p>
             <Link to={next}>next</Link>
           </p>
         )}
       </div>
-    </div>
+    </Layout>
   )
 }
 
