@@ -23,7 +23,7 @@ $gradientColor2: #800080;
 @mixin moreLess($content){
     display: block;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 0.85rem;
     background: none;
     border: none;
     outline: none;
@@ -34,6 +34,7 @@ $gradientColor2: #800080;
     cursor: pointer;
     &::after{
         content: $content;
+        font-size: inherit;
         color: $gradientColor1;
     }
     &:hover{
@@ -78,21 +79,26 @@ a{
 }
 .character-card{
     position: relative;
-    width: 100%;
-    max-width: 220px;
-    min-height: 300px;
-    max-height: 320px;
+    width: 80%;
+    max-width: 280px;
+    min-height: 320px;
+    max-height: 400px;
     height: fit-content;
     border-radius: 20px;
     background-color: $primaryBackground;
     transition: transform 0.1s ease-in-out;
     @include gradientBorder();
     a{
+        display: block;
+        height: 100%;
+        width: 100%;
         text-decoration: none;
+        border: inherit;
+        border-radius: inherit;
     }
     h2{
         color: $textColor;
-        padding: 0;
+        padding: 1rem;
         margin: 0;
     }
     &:hover{
@@ -101,14 +107,17 @@ a{
     
 }
 .character-image-container{
-    height: 220px;
-    width: 220px;
+    width: 100%;
+    height: auto;
     border-radius: 20px;
     overflow: hidden;
     margin: 0 auto 10px auto;
     background-color: $primaryBackground3;
     img{
-        max-width: 220px;
+        display: block;
+        width: 100%;
+        min-height: 200px;
+        height: auto;
         border-radius: 20px;
     }
     }
@@ -118,21 +127,22 @@ a{
 
 .single-image-container{
     position: relative;
-    min-width: 280px;
-    min-height: 260px;
+    min-width: 250px;
+    min-height: 220px;
     height: fit-content;
     width: fit-content;
     margin: 10px auto;
     border-radius: 20px;
     box-shadow: 5px 8px 10px 2px $primaryBackground3;
     img{
+        display: block;
         width: 100%;
-        height: 100%;
         border-radius: 20px;
     }
     
 }
 .character-page{
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -176,11 +186,10 @@ a{
     div{
         a{
             color: $lightText;
-&:hover{
-    color: $textColor;
-}
+            &:hover{
+                color: $textColor;
+            }
         }
-
     }
     form{
         flex: 1;
@@ -233,10 +242,13 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
     flex-wrap: wrap;
     gap: 20px;
     padding: 0 1rem 2rem 1rem;
     select{
+        width: 90%;
         background-color: $primaryBackground2;
         color: $textColor;
         padding: 0.5rem;

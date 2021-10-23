@@ -73,6 +73,7 @@ const IndexPage = ({ data }) => {
       setCharactersList={setCharactersList}
       characterSearch={characterSearch}
       setCharacterSearch={setCharacterSearch}
+      search
     >
       <section>
         <h2 className="heading">Few Characters</h2>

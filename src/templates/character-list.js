@@ -26,6 +26,7 @@ const IndexPage = ({ data, pageContext }) => {
       setCharactersList={setCharactersList}
       characterSearch={characterSearch}
       setCharacterSearch={setCharacterSearch}
+      search
     >
       <h2 className="heading">Character List</h2>
       <GridContainer>

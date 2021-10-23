@@ -8,16 +8,18 @@ const Layout = props => {
         <div>
           <Link to="/">Home</Link>
         </div>
-        <form>
-          <input
-            type="search"
-            placeholder="Search"
-            onChange={e => {
-              props.setCharacterSearch(e.target.value)
-            }}
-            value={props.characterSearch}
-          />
-        </form>
+        {props.search && (
+          <form>
+            <input
+              type="search"
+              placeholder="Search"
+              onChange={e => {
+                props.setCharacterSearch(e.target.value)
+              }}
+              value={props.characterSearch}
+            />
+          </form>
+        )}
         <div>
           <Link to="/characters">Characters</Link>
         </div>
