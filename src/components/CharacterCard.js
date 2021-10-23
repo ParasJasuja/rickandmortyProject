@@ -5,7 +5,10 @@ const CharacterCard = props => {
   const character = props.character
   return (
     <div className="character-card">
-      <Link to={"/character/" + character.name} key={character.id}>
+      <Link
+        to={"/character/" + character.name + character.id}
+        key={character.id}
+      >
         <div>
           <div className="character-image-container">
             <img

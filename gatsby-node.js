@@ -73,7 +73,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const characters = data.allCharacters.nodes
   characters.forEach(ch => {
     createPage({
-      path: `/character/${ch.name}+${ch.id}`,
+      path: `/character/${ch.name}${ch.id}`,
       component: characterTemplate,
       context: {
         id: `${ch.id}`,
