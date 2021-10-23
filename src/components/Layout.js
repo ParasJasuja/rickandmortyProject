@@ -15,6 +15,9 @@ const Layout = props => {
               placeholder="Search"
               onChange={e => {
                 props.setCharacterSearch(e.target.value)
+                if (props.setFilterValue) {
+                  props.setFilterValue("any")
+                }
               }}
               value={props.characterSearch}
             />

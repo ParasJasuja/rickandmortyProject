@@ -72,6 +72,7 @@ const IndexPage = ({ data }) => {
       characters={characters}
       setCharactersList={setCharactersList}
       characterSearch={characterSearch}
+      setFilterValue={setFilterValue}
       setCharacterSearch={setCharacterSearch}
       search
     >
